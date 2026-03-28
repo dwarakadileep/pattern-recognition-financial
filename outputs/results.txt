@@ -1,2 +1,2 @@
-Test MSE: 0.011821
-Final Training Loss: 0.015555
+Test MSE: 0.010585
+Final Training Loss: 0.014353

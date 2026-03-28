@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pattern Recognition - Financial Time Series</title>
+    <title>Pattern Recognition - Financial Time Series Forecasting</title>
     <style>
         * {
             margin: 0;
@@ -14,57 +14,66 @@
 
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: #0f1117;
-            color: #e0e0e0;
+            background: #f5f5f5;
+            color: #2c2c2c;
         }
 
         header {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 2px solid #00d4ff;
+            background: #1c1c1c;
+            padding: 50px 40px;
+            border-bottom: 3px solid #4a90a4;
         }
 
         header h1 {
-            font-size: 2rem;
-            color: #00d4ff;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         header p {
-            color: #aaa;
-            font-size: 1rem;
+            color: #aaaaaa;
+            margin-top: 8px;
+            font-size: 0.95rem;
         }
 
         .badge-row {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 16px;
             flex-wrap: wrap;
         }
 
         .badge {
-            background: #00d4ff22;
-            border: 1px solid #00d4ff55;
-            color: #00d4ff;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            background: #2e2e2e;
+            border: 1px solid #444;
+            color: #cccccc;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 30px;
         }
 
         section {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
+            padding: 50px 0;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         h2 {
-            color: #00d4ff;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            border-left: 4px solid #00d4ff;
-            padding-left: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1c1c1c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #4a90a4;
+            display: inline-block;
         }
 
         .cards {
@@ -74,21 +83,76 @@
         }
 
         .card {
-            background: #1a1a2e;
-            border: 1px solid #00d4ff33;
-            border-radius: 12px;
-            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 22px;
         }
 
         .card h3 {
-            color: #00d4ff;
-            margin-bottom: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1c1c1c;
+            margin-bottom: 10px;
         }
 
         .card p {
-            color: #aaa;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            color: #555;
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .pipeline {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pipe-step {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 110px;
+        }
+
+        .pipe-step p {
+            font-size: 0.82rem;
+            color: #444;
+        }
+
+        .arrow {
+            color: #4a90a4;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .results-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .metric {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        .metric h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a90a4;
+        }
+
+        .metric p {
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 6px;
         }
 
         .plots-grid {
@@ -98,95 +162,43 @@
         }
 
         .plot-card {
-            background: #1a1a2e;
-            border: 1px solid #00d4ff33;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             overflow: hidden;
         }
 
         .plot-card img {
             width: 100%;
-            height: 200px;
+            height: 190px;
             object-fit: cover;
-            background: #111;
+            display: block;
+            background: #eee;
         }
 
-        .plot-card .plot-info {
-            padding: 12px;
+        .plot-info {
+            padding: 14px;
         }
 
-        .plot-card .plot-info h4 {
-            color: #00d4ff;
-            font-size: 0.95rem;
+        .plot-info h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #1c1c1c;
         }
 
-        .plot-card .plot-info p {
-            color: #aaa;
+        .plot-info p {
             font-size: 0.8rem;
+            color: #777;
             margin-top: 4px;
-        }
-
-        .results-box {
-            background: #1a1a2e;
-            border: 1px solid #00d4ff33;
-            border-radius: 12px;
-            padding: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-
-        .metric h3 {
-            font-size: 2rem;
-            color: #00d4ff;
-        }
-
-        .metric p {
-            color: #aaa;
-            font-size: 0.85rem;
-            margin-top: 5px;
-        }
-
-        .pipeline {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .pipe-step {
-            background: #1a1a2e;
-            border: 1px solid #00d4ff55;
-            border-radius: 10px;
-            padding: 14px 20px;
-            text-align: center;
-            min-width: 130px;
-        }
-
-        .pipe-step .icon {
-            font-size: 1.6rem;
-        }
-
-        .pipe-step p {
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-top: 4px;
-        }
-
-        .arrow {
-            color: #00d4ff;
-            font-size: 1.4rem;
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            color: #555;
-            font-size: 0.85rem;
-            border-top: 1px solid #ffffff11;
-            margin-top: 60px;
+            color: #999;
+            font-size: 0.82rem;
+            background: #1c1c1c;
+            margin-top: 0;
         }
     </style>
 </head>
@@ -194,164 +206,160 @@
 <body>
 
     <header>
-        <h1>📈 Pattern Recognition for Financial Time Series</h1>
-        <p>Using STFT Spectrograms + CNN to predict future stock prices</p>
-        <div class="badge-row">
-            <span class="badge">Python</span>
-            <span class="badge">TensorFlow</span>
-            <span class="badge">STFT</span>
-            <span class="badge">CNN</span>
-            <span class="badge">Yahoo Finance</span>
+        <div class="container">
+            <h1>Pattern Recognition for Financial Time Series Forecasting</h1>
+            <p>Time-frequency signal processing and deep learning for stock price prediction</p>
+            <div class="badge-row">
+                <span class="badge">Python</span>
+                <span class="badge">TensorFlow</span>
+                <span class="badge">STFT</span>
+                <span class="badge">CNN</span>
+                <span class="badge">Yahoo Finance</span>
+            </div>
         </div>
     </header>
 
-    <!-- Objective -->
-    <section>
-        <h2>🎯 Objective</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>Problem</h3>
-                <p>Financial time series like stock prices are non-stationary signals. Traditional models fail to
-                    capture both time and frequency patterns simultaneously.</p>
-            </div>
-            <div class="card">
-                <h3>Approach</h3>
-                <p>We treat stock prices as signals, apply Short-Time Fourier Transform (STFT) to generate spectrograms,
-                    and train a CNN to predict future prices.</p>
-            </div>
-            <div class="card">
-                <h3>Companies Used</h3>
-                <p>📊 TCS (TCS.NS)<br />📊 Infosys (INFY.NS)<br />📊 Reliance (RELIANCE.NS)<br /><br />5 years of daily
-                    closing price data (2019–2024)</p>
-            </div>
-        </div>
-    </section>
+    <div class="container">
 
-    <!-- Pipeline -->
-    <section>
-        <h2>⚙️ System Pipeline</h2>
-        <div class="pipeline">
-            <div class="pipe-step">
-                <div class="icon">📥</div>
-                <p>Raw Stock Data</p>
+        <section>
+            <h2>Objective</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Problem</h3>
+                    <p>Financial time series like stock prices are non-stationary signals. Traditional models fail to
+                        capture time and frequency patterns simultaneously.</p>
+                </div>
+                <div class="card">
+                    <h3>Approach</h3>
+                    <p>Stock prices are treated as signals. Short-Time Fourier Transform (STFT) converts them into
+                        spectrograms, which a CNN model uses to predict future prices.</p>
+                </div>
+                <div class="card">
+                    <h3>Companies Analyzed</h3>
+                    <p>TCS (TCS.NS)<br />Infosys (INFY.NS)<br />Reliance (RELIANCE.NS)<br /><br />5 years of daily
+                        closing price data — 2019 to 2024.</p>
+                </div>
             </div>
-            <div class="arrow">→</div>
-            <div class="pipe-step">
-                <div class="icon">🔧</div>
-                <p>Normalize</p>
-            </div>
-            <div class="arrow">→</div>
-            <div class="pipe-step">
-                <div class="icon">🌊</div>
-                <p>STFT</p>
-            </div>
-            <div class="arrow">→</div>
-            <div class="pipe-step">
-                <div class="icon">🖼️</div>
-                <p>Spectrogram</p>
-            </div>
-            <div class="arrow">→</div>
-            <div class="pipe-step">
-                <div class="icon">🧠</div>
-                <p>CNN Model</p>
-            </div>
-            <div class="arrow">→</div>
-            <div class="pipe-step">
-                <div class="icon">📈</div>
-                <p>Prediction</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Results -->
-    <section>
-        <h2>📊 Results</h2>
-        <div class="results-box">
-            <div class="metric">
-                <h3>0.0118</h3>
-                <p>Test MSE (Mean Squared Error)</p>
+        <section>
+            <h2>System Pipeline</h2>
+            <div class="pipeline">
+                <div class="pipe-step">
+                    <p>Raw Stock Data</p>
+                </div>
+                <div class="arrow">&#8594;</div>
+                <div class="pipe-step">
+                    <p>Normalize</p>
+                </div>
+                <div class="arrow">&#8594;</div>
+                <div class="pipe-step">
+                    <p>STFT</p>
+                </div>
+                <div class="arrow">&#8594;</div>
+                <div class="pipe-step">
+                    <p>Spectrogram</p>
+                </div>
+                <div class="arrow">&#8594;</div>
+                <div class="pipe-step">
+                    <p>CNN Model</p>
+                </div>
+                <div class="arrow">&#8594;</div>
+                <div class="pipe-step">
+                    <p>Prediction</p>
+                </div>
             </div>
-            <div class="metric">
-                <h3>20</h3>
-                <p>Training Epochs</p>
-            </div>
-            <div class="metric">
-                <h3>0.014</h3>
-                <p>Final Training Loss</p>
-            </div>
-            <div class="metric">
-                <h3>3</h3>
-                <p>Companies Analyzed</p>
-            </div>
-            <div class="metric">
-                <h3>1235</h3>
-                <p>Days of Data per Company</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Plots -->
-    <section>
-        <h2>🖼️ Output Figures</h2>
-        <div class="plots-grid">
-            <div class="plot-card">
-                <img src="outputs/timeseries_TCS.NS.png" alt="TCS Time Series" />
-                <div class="plot-info">
-                    <h4>TCS - Time Series</h4>
-                    <p>Normalized stock price over time</p>
+        <section>
+            <h2>Results</h2>
+            <div class="results-box">
+                <div class="metric">
+                    <h3>0.0118</h3>
+                    <p>Test MSE</p>
+                </div>
+                <div class="metric">
+                    <h3>20</h3>
+                    <p>Training Epochs</p>
+                </div>
+                <div class="metric">
+                    <h3>0.014</h3>
+                    <p>Final Training Loss</p>
+                </div>
+                <div class="metric">
+                    <h3>3</h3>
+                    <p>Companies Analyzed</p>
+                </div>
+                <div class="metric">
+                    <h3>1235</h3>
+                    <p>Days of Data</p>
                 </div>
             </div>
-            <div class="plot-card">
-                <img src="outputs/timeseries_INFY.NS.png" alt="INFY Time Series" />
-                <div class="plot-info">
-                    <h4>Infosys - Time Series</h4>
-                    <p>Normalized stock price over time</p>
+        </section>
+
+        <section>
+            <h2>Output Figures</h2>
+            <div class="plots-grid">
+                <div class="plot-card">
+                    <img src="outputs/timeseries_TCS.NS.png" alt="TCS Time Series" />
+                    <div class="plot-info">
+                        <h4>TCS - Time Series</h4>
+                        <p>Normalized stock price over time</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/timeseries_INFY.NS.png" alt="INFY Time Series" />
+                    <div class="plot-info">
+                        <h4>Infosys - Time Series</h4>
+                        <p>Normalized stock price over time</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/timeseries_RELIANCE.NS.png" alt="Reliance Time Series" />
+                    <div class="plot-info">
+                        <h4>Reliance - Time Series</h4>
+                        <p>Normalized stock price over time</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/spectrogram_TCS.NS.png" alt="TCS Spectrogram" />
+                    <div class="plot-info">
+                        <h4>TCS - Spectrogram</h4>
+                        <p>STFT time-frequency representation</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/spectrogram_INFY.NS.png" alt="INFY Spectrogram" />
+                    <div class="plot-info">
+                        <h4>Infosys - Spectrogram</h4>
+                        <p>STFT time-frequency representation</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/spectrogram_RELIANCE.NS.png" alt="Reliance Spectrogram" />
+                    <div class="plot-info">
+                        <h4>Reliance - Spectrogram</h4>
+                        <p>STFT time-frequency representation</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/cnn_predictions.png" alt="CNN Predictions" />
+                    <div class="plot-info">
+                        <h4>CNN Predictions vs Actual</h4>
+                        <p>Model output compared to real prices</p>
+                    </div>
+                </div>
+                <div class="plot-card">
+                    <img src="outputs/training_loss.png" alt="Training Loss" />
+                    <div class="plot-info">
+                        <h4>Training Loss Curve</h4>
+                        <p>MSE loss over 20 epochs</p>
+                    </div>
                 </div>
             </div>
-            <div class="plot-card">
-                <img src="outputs/timeseries_RELIANCE.NS.png" alt="Reliance Time Series" />
-                <div class="plot-info">
-                    <h4>Reliance - Time Series</h4>
-                    <p>Normalized stock price over time</p>
-                </div>
-            </div>
-            <div class="plot-card">
-                <img src="outputs/spectrogram_TCS.NS.png" alt="TCS Spectrogram" />
-                <div class="plot-info">
-                    <h4>TCS - Spectrogram</h4>
-                    <p>STFT time-frequency representation</p>
-                </div>
-            </div>
-            <div class="plot-card">
-                <img src="outputs/spectrogram_INFY.NS.png" alt="INFY Spectrogram" />
-                <div class="plot-info">
-                    <h4>Infosys - Spectrogram</h4>
-                    <p>STFT time-frequency representation</p>
-                </div>
-            </div>
-            <div class="plot-card">
-                <img src="outputs/spectrogram_RELIANCE.NS.png" alt="Reliance Spectrogram" />
-                <div class="plot-info">
-                    <h4>Reliance - Spectrogram</h4>
-                    <p>STFT time-frequency representation</p>
-                </div>
-            </div>
-            <div class="plot-card">
-                <img src="outputs/cnn_predictions.png" alt="CNN Predictions" />
-                <div class="plot-info">
-                    <h4>CNN Predictions vs Actual</h4>
-                    <p>Model output compared to real prices</p>
-                </div>
-            </div>
-            <div class="plot-card">
-                <img src="outputs/training_loss.png" alt="Training Loss" />
-                <div class="plot-info">
-                    <h4>Training Loss Curve</h4>
-                    <p>MSE loss over 20 epochs</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+
+    </div>
 
     <footer>
         Pattern Recognition for Financial Time Series Forecasting &nbsp;|&nbsp; 2024
