@@ -72,11 +72,6 @@ python cnn_model.py
 2. A. Tsantekidis et al., "Deep Learning for Financial Time Series Forecasting"
 3. S. Hochreiter and J. Schmidhuber, "Long Short-Term Memory," Neural Computation, 1997
 
-## Final Push to GitHub
-
-1. Save the file (**Ctrl+S**)
-2. Source Control icon → commit message: `Add project README`
-3. **Commit** → **Sync Changes** ✅
 
 ```
 https://github.com/dwarakadileep/pattern-recognition-financial
